@@ -8,7 +8,8 @@ RUN apt-get update && apt-get install -y \
     php-imap \
     php-xml \
     php-gd \
-    php-mysql
+    php-mysql \
+    php-ldap
 
 # Copy your LimeSurvey application files to the web root directory
 COPY LimeSurvey-3.x-LTS/ /usr/share/nginx/html
