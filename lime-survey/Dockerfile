@@ -1,30 +1,24 @@
-FROM nginx
+FROM nginx:latest
 
-RUN apt update -y && apt upgrade -y
+# Install PHP and required extensions
+RUN apt-get update && apt-get install -y \
+    php-fpm \
+    php-mbstring \
+    php-zip \
+    php-imap \
+    php-xml \
+    php-gd \
+    php-mysql
 
-RUN apt install -y apache2 mariadb-server php libapache2-mod-php php-mysql
+# Copy your LimeSurvey application files to the web root directory
+COPY LimeSurvey-3.x-LTS/ /usr/share/nginx/html
 
-RUN apt install -y php-xml php-gd php-ldap php-zip php-imap
+# Expose the web server port
+EXPOSE 80
 
-RUN cd /var/www/html/
+# Volumes for Nginx and PHP configuration files
+VOLUME ["/etc/nginx/conf.d", "/etc/php/8.2/fpm/pool.d/"]
 
-RUN apt install -y wget 
-
-RUN apt install -y unzip
-
-# RUN rm /etc/nginx/nginx.conf /etc/nginx/conf.d/default.conf
-
-# COPY ./limesurvey.conf /etc/nginx/nginx.conf
-COPY ./nginx.conf /etc/nginx/nginx.conf
-COPY ./default.conf /etc/nginx/conf.d/default.conf
-
-COPY ./LimeSurvey-3.x-LTS/* /usr/share/nginx/html
-
-RUN apt-get install -y lsb-release && apt-get install -y software-properties-common && add-apt-repository "deb http://archive.ubuntu.com/ubuntu $(lsb_release -sc) universe"
-
-RUN apt update -y && apt-get upgrade -y
-
-RUN apt-get install -y php-mbstring
-
-
-
+RUN chown -R www-data:www-data /usr/share/nginx/html
+# Start Nginx and PHP-FPM in the foreground
+CMD ["bash", "-c", "nginx -g 'daemon off;' & php-fpm8.2 -F"]
