@@ -1,0 +1,29 @@
+services:
+  limesurvey:
+    build: ./lime-survey/
+    depends_on:
+      - mariadb
+    ports:
+      - "80:80"
+    networks:
+      - backend
+    volumes:
+     - ./lime-survey/nginx:/etc/nginx/conf.d
+     - ./lime-survey/php-fpm:/etc/php/8.2/fpm/pool.d/
+
+  mariadb:
+    image: mariadb:10.2
+    environment:
+      MYSQL_ROOT_PASSWORD: localhost
+      MYSQL_DATABASE: limesurveydb
+      MYSQL_USER: limesurveyuser
+      MYSQL_PASSWORD: localhost
+    networks:
+      - backend
+    restart: on-failure
+    volumes:
+     - ${PWD}/mariadb:/var/lib/mysql
+
+networks:
+  backend:
+    driver: bridge
