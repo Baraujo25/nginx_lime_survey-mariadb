@@ -18,6 +18,8 @@ services:
       MYSQL_DATABASE: limesurveydb
       MYSQL_USER: limesurveyuser
       MYSQL_PASSWORD: localhost
+    ports:
+      - "3306:3306"
     networks:
       - backend
     restart: on-failure
