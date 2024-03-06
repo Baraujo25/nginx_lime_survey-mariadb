@@ -21,6 +21,8 @@
 	- Database name: limesurveydb 
 	- Database user: limesurveyuser
 	- Database passoword: localhost
-
-6. Enjoy
+6. Default *username* and *password* for lime survey:
+	- user: admin
+	- password: password
+7. Enjoy
 
