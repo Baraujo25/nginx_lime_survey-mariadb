@@ -16,7 +16,11 @@
 1. Navigate in the browser to http://localhost
 2. Start installation process
 3. All LimeSurvey pre-requisites should be met
-4. Fill username and password for database
-5. IP of database is the one saved into clipboard
+5. Fill database requirements:
+	- IP: *Paste the one in the clipboard*:3306
+	- Database name: limesurveydb 
+	- Database user: limesurveyuser
+	- Database passoword: localhost
+
 6. Enjoy
 
